@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Couverts.Example.Web", "Couverts.Example.Web\Couverts.Example.Web.csproj", "{1A08886E-B25D-4693-A40F-C30362C6ACFB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Couverts.Example.ApiCalls", "Couverts.Example.Services\Couverts.Example.ApiCalls.csproj", "{63235689-8BE3-4446-A24A-2D928F9595CB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1A08886E-B25D-4693-A40F-C30362C6ACFB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A08886E-B25D-4693-A40F-C30362C6ACFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1A08886E-B25D-4693-A40F-C30362C6ACFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1A08886E-B25D-4693-A40F-C30362C6ACFB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{63235689-8BE3-4446-A24A-2D928F9595CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63235689-8BE3-4446-A24A-2D928F9595CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63235689-8BE3-4446-A24A-2D928F9595CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63235689-8BE3-4446-A24A-2D928F9595CB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

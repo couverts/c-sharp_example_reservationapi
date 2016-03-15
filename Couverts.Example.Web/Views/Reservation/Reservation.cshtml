@@ -1,0 +1,39 @@
+﻿@using Couverts.Example.Web.Models
+@model Couverts.Example.Web.Models.ReservationModel
+
+<div class="row">
+    <div class="col-md-6 col-md-offset-3">
+        @using (Html.BeginForm()) {
+            @Html.HiddenFor(m => m.DateTime)
+            @Html.HiddenFor(m => m.Persons)
+
+            foreach (var field in Model.Fields) {
+                <div class="form-group">
+                    @Html.Label(field.Title)
+                    @if (field.Required) {<text>*</text>}
+
+                    @if (field.Id == "Gender") {
+                        <select name="Gender" class="form-control">
+                            <option value="Male">Man</option>
+                            <option value="Female">Vrouw</option>
+                        </select>
+                    }
+                    else {
+                        switch (field.Type) {
+                            case ReservationModel.DynamicField.FieldType.Checkbox:
+                                @Html.CheckBox(field.Id, new {@class = "form-control"})
+                                break;
+                            default:
+                                @Html.TextBox(field.Id, field.Value, new {@class = "form-control"})
+                                break;
+                        }
+                    }
+                    
+                    @Html.ValidationMessage(field.Id)
+                </div>
+            }
+            <button id="SubmitButton" type="submit" class="btn btn-primary">Reserveren</button>
+        }
+        * Deze velden zijn verplicht
+    </div>
+</div>

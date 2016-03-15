@@ -1,0 +1,94 @@
+﻿@model Couverts.Example.Web.Models.IndexModel
+
+<div class="row">
+    <div class="col-md-6 col-md-offset-3">
+        @using (Html.BeginForm())
+        {
+            @Html.HiddenFor(m => m.RestaurantName)
+            @Html.HiddenFor(m => m.IntroText)
+            @Html.HiddenFor(m => m.Time)
+
+            <h2>@Model.RestaurantName</h2>
+            <p>@Model.IntroText</p>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.Date)
+                @Html.TextBoxFor(m => m.Date, "{0:yyyy-MM-dd}", new {@class = "form-control"})
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.Persons)
+                @Html.TextBoxFor(m => m.Persons, new {@class = "form-control"})
+            </div>
+
+            <div class="form-group">
+                <div id="AvailableTimesContainer" style="display: none;">
+                    @Html.LabelFor(m => m.Time)
+                    <select id="AvailableTimes" class="form-control"></select>
+                </div>
+            </div>
+
+            <button id="SubmitButton" type="submit" class="btn btn-primary">Volgende</button>
+        }
+
+        <div id="AvailableTimesMessage"></div>
+    </div>
+</div>
+
+@section scripts {
+    <script>
+        $(function () {
+            $('#Date').datepicker( {
+                onSelect: function(date) {
+                    var persons = $('#Persons').val();
+                    reloadAvailableTimes($(this).val(), persons);
+                },
+                dateFormat: "yy-mm-dd",
+                minDate: new Date('@Model.Date.ToString("O")')
+            });
+            $("#Date").datepicker("setDate",$("#Date").datepicker("getDate"));
+
+            $("#Persons").keyup(function() {
+                var date = $('#Date').val();
+                var persons = $('#Persons').val();
+                reloadAvailableTimes(date, persons);
+            });
+
+            $('form').on('submit', function(e) {
+                $('#Time').val($('#AvailableTimes').val());
+            });
+
+            //Initial load of the available times.
+            reloadAvailableTimes($('#Date').val(), $('#Persons').val());
+
+            function reloadAvailableTimes(date, persons) {
+                if (date === '' || persons === '') {
+                    return;
+                }
+
+                $.ajax({
+                    type: 'GET',
+                    url: '@Url.Action("AvailableTimes")',
+                    data: { date: date, persons: persons },
+                    dataType: 'json',
+                    success: function (data) {
+                        $('#AvailableTimes').html('');
+                        $('#AvailableTimesMessage').html('');
+
+                        if (data.Message !== '') {
+                            $('#AvailableTimesContainer').hide();
+                            $('#SubmitButton').prop('disabled', true);
+                            $('#AvailableTimesMessage').html(data.Message);
+                        } else {
+                            $.each(data.Times, function (index, element) {
+                                $('#AvailableTimesContainer').show();
+                                $('#SubmitButton').prop('disabled', false);
+                                $('#AvailableTimes').append('<option value="' + element + '">' + element + '</option>');
+                            });
+                        }
+                    }
+                });
+            }
+        });
+    </script>
+}
